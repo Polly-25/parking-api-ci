@@ -1,0 +1,8 @@
+pytest
+pytest-flask
+SQLAlchemy
+Faker
+flake8
+isort
+black
+mypy
