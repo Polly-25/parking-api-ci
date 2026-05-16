@@ -68,5 +68,5 @@ def init_database(app):
             "parking": parking1,
             "parking_log": parking_log,
         }
-        
+    
         db.session.remove()
