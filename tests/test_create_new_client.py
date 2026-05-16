@@ -31,4 +31,3 @@ def test_create_new_client(client):
     assert client_data["surname"] == new_client_data["surname"]
     assert client_data["credit_card"] == new_client_data["credit_card"]
     assert client_data["car_number"] == new_client_data["car_number"]
-
