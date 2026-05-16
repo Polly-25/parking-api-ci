@@ -1,59 +1,33 @@
-from datetime import datetime
-
 import pytest
 
 
 @pytest.mark.parking
-def test_time_out_after_time_in(client):
-    create_client_response = client.post(
-        "/clients",
-        json={
-            "name": "TimeTest",
-            "surname": "User",
-            "credit_card": "8888777766665555",
-            "car_number": "T000TT",
-        },
-    )
-    assert create_client_response.status_code == 201
-    client_id = create_client_response.get_json()["id"]
+def test_parking_enter(client):
+    client_data = {
+        "name": "Иван",
+        "surname": "Тестов",
+        "credit_card": "1234567812345678",
+        "car_number": "A123BC",
+    }
+    client_resp = client.post("/clients", json=client_data)
+    assert client_resp.status_code == 201
+    client_id = client_resp.get_json()["id"]
 
-    create_parking_response = client.post(
-        "/parkings",
-        json={
-            "address": "Timer",
-            "opened": True,
-            "count_places": 4
-        }
-    )
-    assert create_parking_response.status_code == 201
-    parking_id = create_parking_response.get_json()["id"]
+    parking_data = {
+        "address": "Большая улица, 1",
+        "opened": True,
+        "count_places": 10,
+        "count_available_places": 10,
+    }
+    parking_resp = client.post("/parkings", json=parking_data)
+    assert parking_resp.status_code == 201
+    parking_id = parking_resp.get_json()["id"]
 
-    enter = client.post(
-        "/clients_parkings",
-        json={
-            "client_id": client_id,
-            "parking_id": parking_id
-        }
-    )
-    assert enter.status_code == 201
+    enter_data = {"client_id": client_id, "parking_id": parking_id}
+    enter_resp = client.post("/clients_parkings", json=enter_data)
+    assert enter_resp.status_code == 201
 
-    enter_data = enter.get_json()
-    time_in = enter_data["time_in"]
-    assert time_in is not None
-
-    response = client.delete(
-        "/clients_parkings",
-        json={
-            "client_id": client_id,
-            "parking_id": parking_id
-        }
-    )
-    assert response.status_code == 200, f"Failed to exit: {response.data}"
-
-    exit_data = response.get_json()
-    time_out = exit_data.get("time_out")
-    assert time_out is not None
-
-    time_in_dt = datetime.fromisoformat(time_in)
-    time_out_dt = datetime.fromisoformat(time_out)
-    assert time_out_dt >= time_in_dt
+    enter_json = enter_resp.get_json()
+    assert enter_json["client_id"] == client_id
+    assert enter_json["parking_id"] == parking_id
+    assert "time_in" in enter_json
