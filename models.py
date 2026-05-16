@@ -38,9 +38,5 @@ class ClientParking(db.Model):  # type: ignore[name-defined]
     time_in = Column(DateTime)
     time_out = Column(DateTime)
     __table_args__ = (
-        UniqueConstraint(
-            "client_id",
-            "parking_id",
-            name="unique_client_parking"
-        ),
+        UniqueConstraint("client_id", "parking_id", name="unique_client_parking"),
     )
