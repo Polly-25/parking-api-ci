@@ -1,11 +1,13 @@
 import pytest
+
+
 @pytest.mark.parking
 def test_parking_enter(client):
     client_data = {
         "name": "Иван",
         "surname": "Тестов",
         "credit_card": "1234567812345678",
-        "car_number": "A123BC"
+        "car_number": "A123BC",
     }
     client_resp = client.post("/clients", json=client_data)
     assert client_resp.status_code == 201
@@ -15,16 +17,13 @@ def test_parking_enter(client):
         "address": "Большая улица, 1",
         "opened": True,
         "count_places": 10,
-        "count_available_places": 10
+        "count_available_places": 10,
     }
     parking_resp = client.post("/parkings", json=parking_data)
     assert parking_resp.status_code == 201
     parking_id = parking_resp.get_json()["id"]
 
-    enter_data = {
-        "client_id": client_id,
-        "parking_id": parking_id
-    }
+    enter_data = {"client_id": client_id, "parking_id": parking_id}
     enter_resp = client.post("/clients_parkings", json=enter_data)
     assert enter_resp.status_code == 201
 
