@@ -7,9 +7,7 @@ def test_create_new_client(client):
     }
     response = client.post("/clients", json=new_client_data)
 
-    assert response.status_code == 201, \
-        (f"Expected 201,"
-         f" got {response.status_code}")
+    assert response.status_code == 201, f"Expected 201," f" got {response.status_code}"
 
     data = response.get_json()
 
