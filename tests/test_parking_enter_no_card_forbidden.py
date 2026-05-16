@@ -18,22 +18,13 @@ def test_time_out_after_time_in(client):
     client_id = create_client_response.get_json()["id"]
 
     create_parking_response = client.post(
-        "/parkings",
-        json={
-            "address": "Timer",
-            "opened": True,
-            "count_places": 4
-        }
+        "/parkings", json={"address": "Timer", "opened": True, "count_places": 4}
     )
     assert create_parking_response.status_code == 201
     parking_id = create_parking_response.get_json()["id"]
 
     enter = client.post(
-        "/clients_parkings",
-        json={
-            "client_id": client_id,
-            "parking_id": parking_id
-        }
+        "/clients_parkings", json={"client_id": client_id, "parking_id": parking_id}
     )
     assert enter.status_code == 201
 
@@ -42,11 +33,7 @@ def test_time_out_after_time_in(client):
     assert time_in is not None
 
     response = client.delete(
-        "/clients_parkings",
-        json={
-            "client_id": client_id,
-            "parking_id": parking_id
-        }
+        "/clients_parkings", json={"client_id": client_id, "parking_id": parking_id}
     )
     assert response.status_code == 200, f"Failed to exit: {response.data}"
 
