@@ -5,7 +5,6 @@ import pytest
 from .models import Client, ClientParking, Parking, db
 from .myapp import create_app
 
-
 @pytest.fixture
 def app():
     app = create_app(
@@ -70,5 +69,4 @@ def init_database(app):
             "parking_log": parking_log,
         }
         
-
         db.session.remove()
