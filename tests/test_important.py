@@ -1,9 +1,12 @@
 import pytest
 
 
-@pytest.mark.parametrize("endpoint, method", [
-    ("/clients", "get"),
-])
+@pytest.mark.parametrize(
+    "endpoint, method",
+    [
+        ("/clients", "get"),
+    ],
+)
 def test_get_all_resources(client, endpoint, method):
     if method == "get":
         response = client.get(endpoint)
@@ -12,8 +15,8 @@ def test_get_all_resources(client, endpoint, method):
 
 
 def test_get_client_by_id(client, init_database):
-    client_id = init_database['clients'][0].id
+    client_id = init_database["clients"][0].id
 
-    response = client.get(f'/clients/{client_id}')
+    response = client.get(f"/clients/{client_id}")
     assert response.status_code == 200, f"Client with id {client_id} not found"
-    assert response.json['id'] == client_id
+    assert response.json["id"] == client_id
