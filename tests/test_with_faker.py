@@ -1,5 +1,5 @@
-from ..models import db
 from ..factories import ClientFactory, ParkingFactory
+from ..models import db
 
 
 def test_create_client(client, init_database):
@@ -14,9 +14,7 @@ def test_create_client(client, init_database):
             "car_number": client_obj.car_number,
         },
     )
-    assert response.status_code == 201, \
-        f"Expected 201," \
-        f" got {response.status_code}"
+    assert response.status_code == 201, f"Expected 201," f" got {response.status_code}"
     assert response.get_json()["name"] == client_obj.name
 
 
@@ -30,7 +28,5 @@ def test_create_parking(client, init_database):
             "count_places": parking_obj.count_places,
         },
     )
-    assert response.status_code == 201, \
-        f"Expected 201," \
-        f" got {response.status_code}"
+    assert response.status_code == 201, f"Expected 201," f" got {response.status_code}"
     assert response.get_json()["address"] == parking_obj.address
