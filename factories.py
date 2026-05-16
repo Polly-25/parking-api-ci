@@ -2,7 +2,7 @@ import random
 
 import factory.alchemy
 
-from .models import Client, Parking, db
+from models import Client, Parking, db
 
 
 class ClientFactory(factory.alchemy.SQLAlchemyModelFactory):
