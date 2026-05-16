@@ -26,10 +26,6 @@ def test_enter_closed_parking_forbidden(client):
     parking_id = parking_resp.get_json()["id"]
 
     res = client.post(
-        "/clients_parkings",
-        json={
-            "client_id": client_id,
-            "parking_id": parking_id
-        }
+        "/clients_parkings", json={"client_id": client_id, "parking_id": parking_id}
     )
     assert res.status_code == 400
