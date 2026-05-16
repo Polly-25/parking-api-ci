@@ -1,5 +1,3 @@
-import datetime
-
 from flask import Flask, jsonify, request
 
 
@@ -92,11 +90,10 @@ def create_app(test_config=None):
             count_places = data.get("count_places")
             count_available_places = count_places if opened else 0
             if not address or count_places is None:
-                return (jsonify(
-                    {
-                        "error": "Address and count_places are required"
-                    }
-                ), 400)
+                return (
+                    jsonify({"error": "Address and count_places are required"}),
+                    400,
+                )
             parking_zone = Parking(
                 address=address,
                 opened=opened,
@@ -136,9 +133,7 @@ def create_app(test_config=None):
             return jsonify({"error": "No available places"}), 400
 
         new_parking_record = ClientParking(
-            client_id=client_id,
-            parking_id=parking_id,
-            time_in=datetime.datetime.now()
+            client_id=client_id, parking_id=parking_id, time_in=datetime.datetime.now()
         )
 
         db.session.add(new_parking_record)
