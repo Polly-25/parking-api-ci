@@ -24,4 +24,3 @@ class ParkingFactory(factory.alchemy.SQLAlchemyModelFactory):
     address = factory.Faker("address")
     opened = factory.Faker("boolean")
     count_places = factory.LazyAttribute(lambda x: random.randrange(50, 200))
-
